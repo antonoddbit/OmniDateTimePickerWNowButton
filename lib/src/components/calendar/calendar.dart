@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'flutter_calendar.dart' as cdp;
 
-class Calendar extends StatelessWidget {
+class Calendar extends StatefulWidget {
   final DateTime initialDate;
   final DateTime firstDate;
   final DateTime lastDate;
@@ -18,13 +18,28 @@ class Calendar extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return cdp.CalendarDatePicker(
-      initialDate: initialDate,
-      firstDate: firstDate,
-      lastDate: lastDate,
-      onDateChanged: onDateChanged,
-      selectableDayPredicate: selectableDayPredicate,
+  _CalendarState createState() => _CalendarState();
+}
+
+class _CalendarState extends State<Calendar> {
+  late cdp.CalendarDatePicker _calendarDatePicker;
+  final GlobalKey _calendarKey = GlobalKey();
+
+  @override
+  void initState() {
+    super.initState();
+    _calendarDatePicker = cdp.CalendarDatePicker(
+      initialDate: widget.initialDate,
+      firstDate: widget.firstDate,
+      lastDate: widget.lastDate,
+      onDateChanged: widget.onDateChanged,
+      selectableDayPredicate: widget.selectableDayPredicate,
+      key: _calendarKey, // Add a key to access the internal state
     );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return _calendarDatePicker;
   }
 }

@@ -154,6 +154,12 @@ class _CalendarDatePickerState extends State<CalendarDatePicker> {
   late MaterialLocalizations _localizations;
   late TextDirection _textDirection;
 
+  void changeSelectedDate(DateTime date) {
+    setState(() {
+      _selectedDate = date;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
