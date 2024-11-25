@@ -54,6 +54,9 @@ class OmniDateTimePicker extends StatefulWidget {
 }
 
 class _OmniDateTimePickerState extends State<OmniDateTimePicker> {
+  final GlobalKey<CalendarState> _calendarDatePickerKey = GlobalKey();
+  final GlobalKey _timePickerKey = GlobalKey();
+  
   @override
   Widget build(BuildContext context) {
     final localizations = MaterialLocalizations.of(context);
@@ -80,6 +83,7 @@ class _OmniDateTimePickerState extends State<OmniDateTimePicker> {
                 if (widget.type == OmniDateTimePickerType.dateAndTime ||
                     widget.type == OmniDateTimePickerType.date)
                   Calendar(
+                    key: _calendarDatePickerKey,
                     initialDate: state.dateTime,
                     firstDate: state.firstDate,
                     lastDate: state.lastDate,
@@ -94,6 +98,7 @@ class _OmniDateTimePickerState extends State<OmniDateTimePicker> {
                 if (widget.type == OmniDateTimePickerType.dateAndTime ||
                     widget.type == OmniDateTimePickerType.time)
                   TimePickerSpinner(
+                    key: _timePickerKey,
                     amText:
                         widget.amText ?? localizations.anteMeridiemAbbreviation,
                     pmText:
@@ -106,14 +111,17 @@ class _OmniDateTimePickerState extends State<OmniDateTimePicker> {
                     looping: widget.looping,
                     selectionOverlay: widget.selectionOverlay,
                   ),
-                    TextButton(
-                      onPressed: () {
-                        context
-                            .read<OmniDatetimePickerBloc>()
-                            .add(UpdateDate(dateTime: DateTime.now()));
-                      },
-                      child: const Text('Now'),
-                    ),
+                TextButton(
+                  onPressed: () {
+                    final now = DateTime.now();
+                    context
+                        .read<OmniDatetimePickerBloc>()
+                        .add(UpdateDate(dateTime: now));
+                    // _calendarDatePickerKey.changeSelectedDate(now);
+                    // _timePickerKey.currentState?.changeSelectedDate(now);
+                  },
+                  child: const Text('Now'),
+                ),
               ],
             ),
           );

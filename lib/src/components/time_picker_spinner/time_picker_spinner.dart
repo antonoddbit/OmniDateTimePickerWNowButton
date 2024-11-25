@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../bloc/omni_datetime_picker_bloc.dart';
 import 'bloc/time_picker_spinner_bloc.dart';
 
-class TimePickerSpinner extends StatelessWidget {
+class TimePickerSpinner extends StatefulWidget {
   final String amText;
   final String pmText;
   final bool isShowSeconds;
@@ -40,18 +40,29 @@ class TimePickerSpinner extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    final datetimeBloc = context.read<OmniDatetimePickerBloc>();
+  _TimePickerSpinnerState createState() => _TimePickerSpinnerState();
+}
 
+class _TimePickerSpinnerState extends State<TimePickerSpinner> {
+  late OmniDatetimePickerBloc datetimeBloc;
+
+  @override
+  void initState() {
+    super.initState();
+    datetimeBloc = context.read<OmniDatetimePickerBloc>();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => TimePickerSpinnerBloc(
-        amText: amText,
-        pmText: pmText,
-        isShowSeconds: isShowSeconds,
-        is24HourMode: is24HourMode,
-        minutesInterval: minutesInterval,
-        secondsInterval: secondsInterval,
-        isForce2Digits: isForce2Digits,
+        amText: widget.amText,
+        pmText: widget.pmText,
+        isShowSeconds: widget.isShowSeconds,
+        is24HourMode: widget.is24HourMode,
+        minutesInterval: widget.minutesInterval,
+        secondsInterval: widget.secondsInterval,
+        isForce2Digits: widget.isForce2Digits,
         firstDateTime: datetimeBloc.state.firstDate,
         lastDateTime: datetimeBloc.state.lastDate,
         initialDateTime: datetimeBloc.state.dateTime,
@@ -77,7 +88,7 @@ class TimePickerSpinner extends StatelessWidget {
         builder: (context, state) {
           if (state is TimePickerSpinnerLoaded) {
             return SizedBox(
-              height: height,
+              height: widget.height,
               child: Row(
                 textDirection: TextDirection.ltr,
                 children: [
@@ -87,14 +98,14 @@ class TimePickerSpinner extends StatelessWidget {
                       scrollController: FixedExtentScrollController(
                         initialItem: state.initialHourIndex,
                       ),
-                      diameterRatio: diameterRatio,
-                      itemExtent: itemExtent,
-                      squeeze: squeeze,
-                      magnification: magnification,
-                      looping: looping,
-                      selectionOverlay: selectionOverlay,
+                      diameterRatio: widget.diameterRatio,
+                      itemExtent: widget.itemExtent,
+                      squeeze: widget.squeeze,
+                      magnification: widget.magnification,
+                      looping: widget.looping,
+                      selectionOverlay: widget.selectionOverlay,
                       onSelectedItemChanged: (index) {
-                        if (!is24HourMode) {
+                        if (!widget.is24HourMode) {
                           final hourOffset =
                               state.abbreviationController.selectedItem == 1
                                   ? 12
@@ -114,7 +125,7 @@ class TimePickerSpinner extends StatelessWidget {
                         (index) {
                           String hour = state.hours[index];
 
-                          if (isForce2Digits) {
+                          if (widget.isForce2Digits) {
                             hour = hour.padLeft(2, '0');
                           }
 
@@ -130,12 +141,12 @@ class TimePickerSpinner extends StatelessWidget {
                       scrollController: FixedExtentScrollController(
                         initialItem: state.initialMinuteIndex,
                       ),
-                      diameterRatio: diameterRatio,
-                      itemExtent: itemExtent,
-                      squeeze: squeeze,
-                      magnification: magnification,
-                      looping: looping,
-                      selectionOverlay: selectionOverlay,
+                      diameterRatio: widget.diameterRatio,
+                      itemExtent: widget.itemExtent,
+                      squeeze: widget.squeeze,
+                      magnification: widget.magnification,
+                      looping: widget.looping,
+                      selectionOverlay: widget.selectionOverlay,
                       onSelectedItemChanged: (index) {
                         datetimeBloc.add(UpdateMinute(
                             minute: int.parse(state.minutes[index])));
@@ -145,7 +156,7 @@ class TimePickerSpinner extends StatelessWidget {
                         (index) {
                           String minute = state.minutes[index];
 
-                          if (isForce2Digits) {
+                          if (widget.isForce2Digits) {
                             minute = minute.padLeft(2, '0');
                           }
                           return Center(child: Text(minute));
@@ -155,18 +166,18 @@ class TimePickerSpinner extends StatelessWidget {
                   ),
 
                   /// Seconds
-                  if (isShowSeconds)
+                  if (widget.isShowSeconds)
                     Expanded(
                       child: CupertinoPicker(
                         scrollController: FixedExtentScrollController(
                           initialItem: state.initialSecondIndex,
                         ),
-                        diameterRatio: diameterRatio,
-                        itemExtent: itemExtent,
-                        squeeze: squeeze,
-                        magnification: magnification,
-                        looping: looping,
-                        selectionOverlay: selectionOverlay,
+                        diameterRatio: widget.diameterRatio,
+                        itemExtent: widget.itemExtent,
+                        squeeze: widget.squeeze,
+                        magnification: widget.magnification,
+                        looping: widget.looping,
+                        selectionOverlay: widget.selectionOverlay,
                         onSelectedItemChanged: (index) {
                           datetimeBloc.add(UpdateSecond(
                               second: int.parse(state.seconds[index])));
@@ -176,7 +187,7 @@ class TimePickerSpinner extends StatelessWidget {
                           (index) {
                             String second = state.seconds[index];
 
-                            if (isForce2Digits) {
+                            if (widget.isForce2Digits) {
                               second = second.padLeft(2, '0');
                             }
 
@@ -187,15 +198,15 @@ class TimePickerSpinner extends StatelessWidget {
                     ),
 
                   /// AM/PM
-                  if (!is24HourMode)
+                  if (!widget.is24HourMode)
                     Expanded(
                       child: CupertinoPicker.builder(
                         scrollController: state.abbreviationController,
-                        diameterRatio: diameterRatio,
-                        itemExtent: itemExtent,
-                        squeeze: squeeze,
-                        magnification: magnification,
-                        selectionOverlay: selectionOverlay,
+                        diameterRatio: widget.diameterRatio,
+                        itemExtent: widget.itemExtent,
+                        squeeze: widget.squeeze,
+                        magnification: widget.magnification,
+                        selectionOverlay: widget.selectionOverlay,
                         onSelectedItemChanged: (index) {
                           if (index == 0) {
                             datetimeBloc

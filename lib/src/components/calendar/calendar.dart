@@ -18,10 +18,10 @@ class Calendar extends StatefulWidget {
   });
 
   @override
-  _CalendarState createState() => _CalendarState();
+  CalendarState createState() => CalendarState();
 }
 
-class _CalendarState extends State<Calendar> {
+class CalendarState extends State<Calendar> {
   late cdp.CalendarDatePicker _calendarDatePicker;
   final GlobalKey _calendarKey = GlobalKey();
 
