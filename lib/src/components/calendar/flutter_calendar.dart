@@ -343,6 +343,10 @@ class _CalendarDatePickerState extends State<CalendarDatePicker> {
                 : DatePickerMode.day);
           },
         ),
+         ElevatedButton(
+              onPressed: () => changeSelectedDate(DateTime.now()),
+              child: const Text('Now'),
+            ),
       ],
     );
   }
