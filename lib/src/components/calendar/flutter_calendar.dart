@@ -343,10 +343,14 @@ class _CalendarDatePickerState extends State<CalendarDatePicker> {
                 : DatePickerMode.day);
           },
         ),
-         ElevatedButton(
-              onPressed: () => changeSelectedDate(DateTime.now()),
-              child: const Text('Now'),
-            ),
+        // should move to bottom of the calendar instead of top
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: ElevatedButton(
+            onPressed: () => changeSelectedDate(DateTime.now()),
+            child: const Text('Now'),
+          ),
+        ),
       ],
     );
   }
