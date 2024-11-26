@@ -160,6 +160,12 @@ class _CalendarDatePickerState extends State<CalendarDatePicker> {
     });
   }
 
+  void setToday() {
+    setState(() {
+      _selectedDate = DateTime.now();
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -305,6 +311,7 @@ class _CalendarDatePickerState extends State<CalendarDatePicker> {
           onChanged: _handleDayChanged,
           onDisplayedMonthChanged: _handleMonthChanged,
           selectableDayPredicate: widget.selectableDayPredicate,
+          changeSelectedDate: setToday,
         );
       case DatePickerMode.year:
         return Padding(
@@ -343,14 +350,7 @@ class _CalendarDatePickerState extends State<CalendarDatePicker> {
                 : DatePickerMode.day);
           },
         ),
-        // should move to bottom of the calendar instead of top
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: ElevatedButton(
-            onPressed: () => changeSelectedDate(DateTime.now()),
-            child: const Text('Now'),
-          ),
-        ),
+
       ],
     );
   }
@@ -486,6 +486,7 @@ class _MonthPicker extends StatefulWidget {
     required this.onChanged,
     required this.onDisplayedMonthChanged,
     this.selectableDayPredicate,
+    this.changeSelectedDate,
   })  : assert(!firstDate.isAfter(lastDate)),
         assert(selectedDate == null || !selectedDate.isBefore(firstDate)),
         assert(selectedDate == null || !selectedDate.isAfter(lastDate));
@@ -527,6 +528,8 @@ class _MonthPicker extends StatefulWidget {
   /// Optional user supplied predicate function to customize selectable days.
   final SelectableDayPredicate? selectableDayPredicate;
 
+  final Function? changeSelectedDate;
+
   @override
   _MonthPickerState createState() => _MonthPickerState();
 }
@@ -541,6 +544,7 @@ class _MonthPickerState extends State<_MonthPicker> {
   Map<Type, Action<Intent>>? _actionMap;
   late FocusNode _dayGridFocus;
   DateTime? _focusedDay;
+  
 
   @override
   void initState() {
@@ -779,7 +783,9 @@ class _MonthPickerState extends State<_MonthPicker> {
   Widget _buildItems(BuildContext context, int index) {
     final DateTime month =
         DateUtils.addMonthsToMonthDate(widget.firstDate, index);
-    return _DayPicker(
+    return 
+    Row( children: [
+    _DayPicker(
       key: ValueKey<DateTime>(month),
       selectedDate: widget.selectedDate,
       currentDate: widget.currentDate,
@@ -788,6 +794,16 @@ class _MonthPickerState extends State<_MonthPicker> {
       lastDate: widget.lastDate,
       displayedMonth: month,
       selectableDayPredicate: widget.selectableDayPredicate,
+    ),
+            // should move to bottom of the calendar instead of top
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: ElevatedButton(
+            onPressed: () => widget.changeSelectedDate,
+            child: const Text('Now'),
+          ),
+        ),
+    ]
     );
   }
 
