@@ -335,7 +335,9 @@ class _CalendarDatePickerState extends State<CalendarDatePicker> {
     assert(debugCheckHasDirectionality(context));
     return Stack(
       children: <Widget>[
-
+        SizedBox(
+              height: _subHeaderHeight + _maxDayPickerHeight + 40,
+              child: 
         Row(
           children: [
             SizedBox(
@@ -351,6 +353,7 @@ class _CalendarDatePickerState extends State<CalendarDatePicker> {
               ),
             ),
           ],
+        ),
         ),
         // Put the mode toggle button on top so that it won't be covered up by the _MonthPicker
         _DatePickerModeToggleButton(
