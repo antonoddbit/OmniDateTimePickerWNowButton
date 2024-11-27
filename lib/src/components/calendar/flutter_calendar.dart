@@ -343,8 +343,8 @@ class _CalendarDatePickerState extends State<CalendarDatePicker> {
               child:
                 _buildPicker(),
               ),
-              Align(
-              alignment: Alignment.bottomCenter,
+              SizedBox(
+              height: 40,
               child: ElevatedButton(
                 onPressed: () => setToday,
                 child: const Text('Now'),
