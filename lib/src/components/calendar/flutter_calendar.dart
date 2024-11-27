@@ -336,7 +336,7 @@ class _CalendarDatePickerState extends State<CalendarDatePicker> {
     return Stack(
       children: <Widget>[
         SizedBox(
-          height: _subHeaderHeight + _maxDayPickerHeight,
+          height: _subHeaderHeight + _maxDayPickerHeight + 40,
           child: _buildPicker(),
         ),
         // Put the mode toggle button on top so that it won't be covered up by the _MonthPicker
@@ -350,7 +350,13 @@ class _CalendarDatePickerState extends State<CalendarDatePicker> {
                 : DatePickerMode.day);
           },
         ),
-
+                Align(
+          alignment: Alignment.bottomCenter,
+          child: ElevatedButton(
+            onPressed: () => changeSelectedDate,
+            child: const Text('Now'),
+          ),
+        ),
       ],
     );
   }
@@ -784,7 +790,6 @@ class _MonthPickerState extends State<_MonthPicker> {
     final DateTime month =
         DateUtils.addMonthsToMonthDate(widget.firstDate, index);
     return 
-    Row( children: [
     _DayPicker(
       key: ValueKey<DateTime>(month),
       selectedDate: widget.selectedDate,
@@ -794,16 +799,6 @@ class _MonthPickerState extends State<_MonthPicker> {
       lastDate: widget.lastDate,
       displayedMonth: month,
       selectableDayPredicate: widget.selectableDayPredicate,
-    ),
-            // should move to bottom of the calendar instead of top
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: ElevatedButton(
-            onPressed: () => widget.changeSelectedDate,
-            child: const Text('Now'),
-          ),
-        ),
-    ]
     );
   }
 
