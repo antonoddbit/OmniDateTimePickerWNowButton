@@ -335,19 +335,22 @@ class _CalendarDatePickerState extends State<CalendarDatePicker> {
     assert(debugCheckHasDirectionality(context));
     return Stack(
       children: <Widget>[
-        SizedBox(
-          height: _subHeaderHeight + _maxDayPickerHeight + 40,
-          child: Row( children: [
-            _buildPicker(),
-            Align(
-          alignment: Alignment.bottomCenter,
-          child: ElevatedButton(
-            onPressed: () => setToday,
-            child: const Text('Now'),
-          ),
-        ),
-          ]
-          ),
+
+        Row(
+          children: [
+            SizedBox(
+              height: _subHeaderHeight + _maxDayPickerHeight,
+              child:
+                _buildPicker(),
+              ),
+              Align(
+              alignment: Alignment.bottomCenter,
+              child: ElevatedButton(
+                onPressed: () => setToday,
+                child: const Text('Now'),
+              ),
+            ),
+          ],
         ),
         // Put the mode toggle button on top so that it won't be covered up by the _MonthPicker
         _DatePickerModeToggleButton(
