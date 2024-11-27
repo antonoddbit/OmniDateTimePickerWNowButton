@@ -345,6 +345,7 @@ class _CalendarDatePickerState extends State<CalendarDatePicker> {
               ),
               SizedBox(
                 height: 40,
+                width: 60, // Add a width to the SizedBox
                 child: ElevatedButton(
                   onPressed: setToday,
                   child: const Text('Now'),
