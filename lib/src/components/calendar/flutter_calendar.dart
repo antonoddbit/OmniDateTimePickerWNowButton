@@ -343,14 +343,14 @@ class _CalendarDatePickerState extends State<CalendarDatePicker> {
                 height: _subHeaderHeight + _maxDayPickerHeight,
                 child: _buildPicker(),
               ),
-              SizedBox(
-                height: 40,
-                width: 60, // Add a width to the SizedBox
-                child: ElevatedButton(
-                  onPressed: setToday,
-                  child: const Text('Now'),
-                ),
-              ),
+              // SizedBox(
+              //   height: 40,
+              //   width: 60, // Add a width to the SizedBox
+              //   child: ElevatedButton(
+              //     onPressed: setToday,
+              //     child: const Text('Now'),
+              //   ),
+              // ),
             ],
           ),
         ),
@@ -865,6 +865,14 @@ class _MonthPickerState extends State<_MonthPicker> {
               ),
             ),
           ),
+            SizedBox(
+                height: 40,
+                width: 60, // Add a width to the SizedBox
+                child: ElevatedButton(
+                  onPressed: widget.changeSelectedDate as VoidCallback?,
+                  child: const Text('Now M1'), // give code for checking code position
+                ),
+              ),
         ],
       ),
     );
