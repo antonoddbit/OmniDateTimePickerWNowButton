@@ -111,17 +111,6 @@ class _OmniDateTimePickerState extends State<OmniDateTimePicker> {
                     looping: widget.looping,
                     selectionOverlay: widget.selectionOverlay,
                   ),
-                TextButton(
-                  onPressed: () {
-                    final now = DateTime.now();
-                    context
-                        .read<OmniDatetimePickerBloc>()
-                        .add(UpdateDate(dateTime: now));
-                    // _calendarDatePickerKey.changeSelectedDate(now);
-                    // _timePickerKey.currentState?.changeSelectedDate(now);
-                  },
-                  child: const Text('Now'),
-                ),
               ],
             ),
           );

@@ -305,6 +305,7 @@ class _CalendarDatePickerState extends State<CalendarDatePicker> {
           onChanged: _handleDayChanged,
           onDisplayedMonthChanged: _handleMonthChanged,
           selectableDayPredicate: widget.selectableDayPredicate,
+          changeSelectedDate: changeSelectedDate,
         );
       case DatePickerMode.year:
         return Padding(
@@ -482,6 +483,7 @@ class _MonthPicker extends StatefulWidget {
     required this.onChanged,
     required this.onDisplayedMonthChanged,
     this.selectableDayPredicate,
+    required this.changeSelectedDate,
   })  : assert(!firstDate.isAfter(lastDate)),
         assert(selectedDate == null || !selectedDate.isBefore(firstDate)),
         assert(selectedDate == null || !selectedDate.isAfter(lastDate));
@@ -522,6 +524,8 @@ class _MonthPicker extends StatefulWidget {
 
   /// Optional user supplied predicate function to customize selectable days.
   final SelectableDayPredicate? selectableDayPredicate;
+
+  final Function(DateTime) changeSelectedDate;
 
   @override
   _MonthPickerState createState() => _MonthPickerState();
@@ -841,6 +845,10 @@ class _MonthPickerState extends State<_MonthPicker> {
               ),
             ),
           ),
+          Expanded(child:          ElevatedButton(
+              onPressed: () => widget.changeSelectedDate(DateTime.now()),
+              child: const Text('Now'),
+            ),)
         ],
       ),
     );
