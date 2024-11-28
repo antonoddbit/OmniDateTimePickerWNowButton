@@ -344,10 +344,6 @@ class _CalendarDatePickerState extends State<CalendarDatePicker> {
                 : DatePickerMode.day);
           },
         ),
-         ElevatedButton(
-              onPressed: () => changeSelectedDate(DateTime.now()),
-              child: const Text('Now'),
-            ),
       ],
     );
   }
@@ -845,10 +841,13 @@ class _MonthPickerState extends State<_MonthPicker> {
               ),
             ),
           ),
-          Expanded(child:          ElevatedButton(
+          SizedBox(
+            height: 40,
+            child: ElevatedButton(
               onPressed: () => widget.changeSelectedDate(DateTime.now()),
               child: const Text('Now'),
-            ),)
+            ),
+            )
         ],
       ),
     );
